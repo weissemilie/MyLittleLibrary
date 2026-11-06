@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1087120854003",
+    "project_id": "mylittlelibrary-app",
+    "storage_bucket": "mylittlelibrary-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087120854003:android:6ff81f118061a177396086",
+        "android_client_info": {
+          "package_name": "dk.weiss.mylittlelibrary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChI-JOo2AyJcsDao1Up8m3jOXjxSyn2YE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
