@@ -69,4 +69,5 @@ dependencies {
     implementation(libs.mlkit.barcode)
 
     implementation(libs.coil.compose)
+    implementation(libs.androidx.compose.material.icons.core)
 }
