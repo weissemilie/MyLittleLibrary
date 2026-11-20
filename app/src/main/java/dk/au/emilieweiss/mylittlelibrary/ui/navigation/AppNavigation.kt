@@ -84,9 +84,8 @@ fun AppNavigation() {
             composable(
                 route = Screen.BookDetail.route,
                 arguments = listOf(navArgument("bookId") { type = NavType.StringType })
-            ) { entry ->
+            ) {
                 BookDetailScreen(
-                    bookId = entry.arguments?.getString("bookId") ?: "",
                     onBackClick = { navController.popBackStack() }
                 )
             }
