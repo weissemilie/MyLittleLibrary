@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -33,8 +34,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dk.au.emilieweiss.mylittlelibrary.ui.components.BookCover
 import dk.au.emilieweiss.mylittlelibrary.ui.theme.extendedColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,11 +98,24 @@ fun BookDetailScreen(
                     shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        book.title,
-                        style = MaterialTheme.typography.headlineMedium,
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 28.dp)
-                    )
+                    ) {
+                        Surface(
+                            shape = MaterialTheme.shapes.medium,
+                            shadowElevation = 8.dp,
+                            modifier = Modifier.width(180.dp)
+                        ) {
+                            BookCover(book = book, modifier = Modifier.fillMaxWidth())
+                        }
+                        Text(
+                            book.title,
+                            style = MaterialTheme.typography.headlineMedium,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 20.dp)
+                        )
+                    }
                 }
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -107,6 +123,8 @@ fun BookDetailScreen(
                 ) {
                     DetailRow("Forfatter", book.author.ifBlank { "Ukendt" })
                     DetailRow("ISBN", book.isbn.ifBlank { "Ikke angivet" })
+                    DetailRow("Forlag", book.publisher.ifBlank { "Ikke angivet" })
+                    DetailRow("Antal sider", book.numberOfPages?.toString() ?: "Ikke angivet")
                     DetailRow("Beskrivelse", book.description.ifBlank { "Ingen beskrivelse" })
                     DetailRow("Status", book.lentTo?.let { "Udlånt til $it" } ?: "Hjemme")
                     state.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }

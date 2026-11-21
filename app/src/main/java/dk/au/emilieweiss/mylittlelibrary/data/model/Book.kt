@@ -11,6 +11,8 @@ data class Book(
     val author: String = "",
     val coverUrl: String = "",
     val description: String = "",
+    val publisher: String = "",
+    val numberOfPages: Int? = null,
     @ServerTimestamp val addedAt: Timestamp? = null,
     val lentTo: String? = null
 )
