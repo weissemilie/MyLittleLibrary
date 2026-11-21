@@ -3,6 +3,7 @@ package dk.au.emilieweiss.mylittlelibrary.ui.library
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -19,7 +20,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,10 +30,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dk.au.emilieweiss.mylittlelibrary.ui.theme.extendedColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,6 +54,12 @@ fun BookDetailScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Bog") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.extendedColors.skyBlue,
+                    titleContentColor = MaterialTheme.extendedColors.onSkyBlue,
+                    navigationIconContentColor = MaterialTheme.extendedColors.onSkyBlue,
+                    actionIconContentColor = MaterialTheme.extendedColors.onSkyBlue
+                ),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Tilbage")
@@ -77,15 +88,29 @@ fun BookDetailScreen(
                     .fillMaxSize()
                     .padding(innerPadding)
                     .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(book.title, style = MaterialTheme.typography.headlineMedium)
-                DetailRow("Forfatter", book.author.ifBlank { "Ukendt" })
-                DetailRow("ISBN", book.isbn.ifBlank { "Ikke angivet" })
-                DetailRow("Beskrivelse", book.description.ifBlank { "Ingen beskrivelse" })
-                DetailRow("Status", book.lentTo?.let { "Udlånt til $it" } ?: "Hjemme")
-                state.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                Surface(
+                    color = MaterialTheme.extendedColors.skyBlue,
+                    contentColor = MaterialTheme.extendedColors.onSkyBlue,
+                    shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        book.title,
+                        style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 28.dp)
+                    )
+                }
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    DetailRow("Forfatter", book.author.ifBlank { "Ukendt" })
+                    DetailRow("ISBN", book.isbn.ifBlank { "Ikke angivet" })
+                    DetailRow("Beskrivelse", book.description.ifBlank { "Ingen beskrivelse" })
+                    DetailRow("Status", book.lentTo?.let { "Udlånt til $it" } ?: "Hjemme")
+                    state.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                }
             }
         }
     }
